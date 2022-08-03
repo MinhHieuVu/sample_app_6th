@@ -1,9 +1,5 @@
 
 
-
-
-To get started with the app, first follow the setup steps in [Section 1.1 Up and running](https://www.railstutorial.org/book#sec-up_and_running).
-
 Next, clone the repo and `cd` into the directory:
 
 ```
@@ -47,7 +43,6 @@ $ rails db:seed
 $ rails server
 ```
 
-Follow the instructions in [Section 1.2.2 `rails server`](https://www.railstutorial.org/book#sec-rails_server) to view the app. You can then register a new user or log in as the sample administrative user with the email `example@railstutorial.org` and password `foobar`.
 
 
 
