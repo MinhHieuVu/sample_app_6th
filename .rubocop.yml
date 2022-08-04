@@ -3,6 +3,7 @@
 
 # Put the following files into the same directory as this file.
 require: rubocop-performance
+require: rubocop-rails
 
 inherit_from:
   - ..rubocop_enabled.yml
@@ -26,7 +27,7 @@ AllCops:
     - csv-split.rb
     - node_modules/node-sass/src/libsass/contrib/libsass.spec
     - node_modules/node-sass/src/libsass/extconf.rb
-  TargetRubyVersion: 2.5.1
+  TargetRubyVersion: 2.7.5
 # Indent private/protected/public as deep as method definitions
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
