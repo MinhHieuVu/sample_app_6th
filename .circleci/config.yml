@@ -30,8 +30,3 @@ jobs:
           name: Rubocop
           command: bundle exec rubocop
 
-workflows:
-  build-and-rubocop:
-    jobs:
-      - build
-      - rubocop
