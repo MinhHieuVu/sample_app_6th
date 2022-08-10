@@ -3,7 +3,7 @@
 
 # Put the following files into the same directory as this file.
 require: rubocop-performance
-#require: rubocop-rails
+require: rubocop-rails
 
 inherit_from:
   - .rubocop_enabled.yml
