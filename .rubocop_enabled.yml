@@ -214,7 +214,7 @@ Layout/IndentationWidth:
   Description: "Use 2 spaces for indentation."
   Enabled: true
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   Description: >-
                  Checks the indentation of the first element in an array
                  literal.
