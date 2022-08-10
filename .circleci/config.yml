@@ -27,7 +27,7 @@ jobs:
       - checkout
       - configure_bundler
       - run:
-          name: Rubocop
+          name: Rubocop and Rspec
           command: |
             bundle exec rubocop
             bundle exec rspec
