@@ -3,6 +3,7 @@
 
 # Put the following files into the same directory as this file.
 require: rubocop-performance
+require: rubocop-rails
 
 inherit_from:
   - .rubocop_enabled.yml
@@ -42,7 +43,7 @@ Rails/UnknownEnv:
     - test
 
 # Align the elements of a hash literal if they span more than one line.
-Layout/AlignHash:
+Layout/HashAlignment:
   # Alignment of entries using hash rocket as separator. Valid values are:
   #
   # key - left alignment of keys
@@ -105,7 +106,7 @@ Layout/AlignHash:
     - ignore_implicit
     - ignore_explicit
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   # Alignment of parameters in multi-line method calls.
   #
   # The `with_first_parameter` style aligns the following lines along the same column
@@ -127,11 +128,11 @@ Layout/AlignParameters:
 Metrics/BlockNesting:
   Max: 4
 
-Style/BracesAroundHashParameters:
-  EnforcedStyle: no_braces
-  SupportedStyles:
-    - braces
-    - no_braces
+# Style/BracesAroundHashParameters:
+#   EnforcedStyle: no_braces
+#   SupportedStyles:
+#     - braces
+#     - no_braces
 
 # Indentation of `when`.
 Layout/CaseIndentation:
@@ -265,7 +266,7 @@ Style/HashSyntax:
     - hash_rockets
 
 # Checks the indentation of the first key in a hash literal.
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   # The value `special_inside_parentheses` means that hash literals with braces
   # that have their opening brace on the same line as a surrounding opening
   # round parenthesis, shall have their first key indented relative to the
@@ -349,7 +350,7 @@ Style/PercentLiteralDelimiters:
     '%x': ()
 
 Naming/PredicateName:
-  NamePrefixBlacklist:
+  ForbiddenPrefixes:
     - get_
 
 Style/RaiseArgs:
@@ -427,7 +428,7 @@ Layout/SpaceInsideHashLiteralBraces:
     - space
     - no_space
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   EnforcedStyle: final_newline
   SupportedStyles:
     - final_newline
@@ -452,7 +453,7 @@ Style/TrivialAccessors:
   #
   # Commonly used in DSLs
   AllowDSLWriters: false
-  Whitelist:
+  AllowedMethods:
     - to_ary
     - to_a
     - to_c
