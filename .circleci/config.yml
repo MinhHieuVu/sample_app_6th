@@ -26,7 +26,7 @@ jobs:
     steps:
       - checkout
       - configure_bundler
-      - run: bundle exec rubocop
+      - run: bundle exec rubocop -A
 
   rspec:
     docker:
