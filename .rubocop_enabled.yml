@@ -220,7 +220,7 @@ Layout/FirstArrayElementIndentation:
                  literal.
   Enabled: true
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   Description: "Checks the indentation of the first key in a hash literal."
   Enabled: true
 
