@@ -17,6 +17,7 @@ Rails:
   Enabled: true
 
 AllCops:
+  NewCops: enable
   Exclude:
     - db/schema.rb
     - config/deploy.rb
