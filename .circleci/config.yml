@@ -28,7 +28,9 @@ jobs:
       - configure_bundler
       - run:
           name: Rubocop
-          command: bundle exec rubocop
+          command: |
+            bundle exec rubocop
+            bundle exec rspec
 workflows:
   version: 2.1
   build-and-rubocop:
