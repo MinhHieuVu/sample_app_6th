@@ -5,8 +5,8 @@
 require: rubocop-performance
 
 inherit_from:
-  - ..rubocop_enabled.yml
-  - ..rubocop_disabled.yml
+  - .rubocop_enabled.yml
+  - .rubocop_disabled.yml
 
 # Common configuration.
 Rails:
