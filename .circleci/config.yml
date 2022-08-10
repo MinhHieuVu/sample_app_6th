@@ -28,7 +28,7 @@ jobs:
       - configure_bundler
       - run:
           name: Rubocop
-          command: bundle exec rubocop
+          command: bundle exec rubocop -A
 
   rspec:
     docker:
@@ -46,4 +46,3 @@ workflows:
     jobs:
       - build
       - rubocop
-      - rspec
