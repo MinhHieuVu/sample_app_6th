@@ -27,12 +27,23 @@ jobs:
       - checkout
       - configure_bundler
       - run:
-          name: Rubocop and Rspec
-          command: |
-            bundle exec rubocop
-            bundle exec rspec
+          name: Rubocop
+          command: bundle exec rubocop
+
+  rspec:
+    docker:
+      - image: circleci/ruby:2.7.5-node-browsers-legacy
+    steps:
+      - checkout
+      - configure_bundler
+      - run:
+          name: Rspec
+          command: bundle exec rspec
+
 workflows:
   version: 2.1
   build-and-rubocop:
     jobs:
       - build
+      - rubocop
+      - rspec
