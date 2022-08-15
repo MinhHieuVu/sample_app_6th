@@ -27,6 +27,13 @@ jobs:
       - checkout
       - configure_bundler
       - run: bundle exec rubocop
+  rspec:
+    docker:
+      - image: circleci/ruby:2.7.5-node-browsers-legacy
+    steps:
+      - checkout
+      - configure_bundler
+      - run: bundle exec rspec
 
 workflows:
   version: 2.1
