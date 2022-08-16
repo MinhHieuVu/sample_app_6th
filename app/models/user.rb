@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :providers, dependent: :destroy
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
@@ -32,19 +33,14 @@ class User < ApplicationRecord
          :omniauthable , omniauth_providers: [:facebook, :google_oauth2]
 
   def self.from_omniauth(auth)
-    result = User.where(email: auth.info.email).first
-    if result
-      return result
-    else
-      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-        user.email = auth.info.email
-        user.password = Devise.friendly_token[0,20]
-        user.uid = auth.uid
-        user.provider = auth.provider
-        #  If you are using confirmable and the provider(s) you use validate emails
-        user.skip_confirmation!
-      end
-    end
+    result = User.find_or_create_by(email: auth.info.email)
+    result.name = auth.info.name if result.name.nil?
+    result.email = auth.info.email
+    result.activated = true
+    result.password = SecureRandom.urlsafe_base64 if result.password.nil?
+    result.save!
+    result.providers.find_or_create_by(provider: auth.provider, name: auth.info.name)
+    result
   end
   # end login gg facebook
 

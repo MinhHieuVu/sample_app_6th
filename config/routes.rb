@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # login devise
-  devise_for :users ,
-             controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  # devise_for :users ,
+  #            controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   root   'static_pages#home'
   get    '/help',    to: 'static_pages#help'
