@@ -1,4 +1,5 @@
 class Micropost < ApplicationRecord
+  CSV_ATTRIBUTES = %w(content created_at).freeze
   belongs_to       :user
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }

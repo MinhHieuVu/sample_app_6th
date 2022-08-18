@@ -6,6 +6,17 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page])
+    date_present = DateTime.now
+    date_past = date_present - 1.month
+    @microposts = current_user.microposts.where(created_at: date_past..date_present)
+    @following_users = current_user.active_relationships.where(created_at: date_past..date_present)
+    @followed_users = current_user.passive_relationships.where(created_at: date_past..date_present)
+    micropost_csv = ExportCsvService.new(@microposts, Micropost::CSV_ATTRIBUTES, "microposts.csv")
+    following_csv = ExportCsvService.new(@following_users, Relationship::CSV_ATTRIBUTES, "following_users.csv", :followed)
+    follower_csv = ExportCsvService.new(@followed_users, Relationship::CSV_ATTRIBUTES, "follower_users.csv", :follower)
+    respond_to do |format|
+      format.zip { send_data ZipService.zip(micropost_csv, following_csv, follower_csv), filename: "export_csv.zip" }
+    end
   end
 
   def show
