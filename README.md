@@ -1,7 +1,7 @@
 
 
 ```
-$ git clone https://github.com/mhartl/sample_app_6th_ed.git
+$ git clone
 $ cd sample_app_6th_ed
 ```
 
