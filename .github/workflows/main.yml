@@ -1,0 +1,16 @@
+on:
+  pull_request:
+    types: [closed]
+  push:
+    branches: -main
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: macos-12
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "evening-savannah-85814"
+          heroku_email: "minhhieuvux@gmail.com"
