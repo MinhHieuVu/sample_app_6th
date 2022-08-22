@@ -22,6 +22,7 @@ gem "will_paginate",              "3.3.0"
 group :development, :test do
   gem "byebug",  "11.1.3", platforms: [:mri, :mingw, :x64_mingw]
   gem "sqlite3", "1.4.2"
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -46,6 +47,11 @@ group :production do
   gem "aws-sdk-s3", "1.87.0", require: false
   gem "pg",         "1.2.3"
 end
+
+gem "rubocop"
+gem "rubocop-discourse"
+gem "rubocop-performance"
+gem "rubocop-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # Uncomment the following line if you're running Rails

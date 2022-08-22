@@ -20,4 +20,5 @@ Rails.application.routes.draw do
   # login devise
   # devise_for :users ,
   #            controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+
 end

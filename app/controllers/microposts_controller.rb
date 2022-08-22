@@ -10,28 +10,28 @@ class MicropostsController < ApplicationController
       redirect_to root_url
     else
       @feed_items = current_user.feed.paginate(page: params[:page])
-      render 'static_pages/home'
+      render "static_pages/home"
     end
   end
 
   def destroy
     @micropost.destroy
     flash[:success] = "Micropost deleted"
-    if request.referrer.nil? || request.referrer == microposts_url
+    if request.referer.nil? || request.referer == microposts_url
       redirect_to root_url
     else
-      redirect_to request.referrer
+      redirect_to request.referer
     end
   end
 
   private
 
-    def micropost_params
-      params.require(:micropost).permit(:content, :image)
-    end
+  def micropost_params
+    params.require(:micropost).permit(:content, :image)
+  end
 
-    def correct_user
-      @micropost = current_user.microposts.find_by(id: params[:id])
-      redirect_to root_url if @micropost.nil?
-    end
+  def correct_user
+    @micropost = current_user.microposts.find_by(id: params[:id])
+    redirect_to root_url if @micropost.nil?
+  end
 end
