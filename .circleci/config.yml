@@ -1,0 +1,45 @@
+version: 2.1
+
+commands:
+  configure_bundler:
+    description: Configure bundler
+    steps:
+      - run:
+          name: Configure bundler
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            gem install rake
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7.5
+    steps:
+      - checkout
+      - configure_bundler
+
+  rubocop:
+    docker:
+      - image: circleci/ruby:2.7.5-node-browsers-legacy
+    steps:
+      - checkout
+      - configure_bundler
+      - run: bundle exec rubocop
+  rspec:
+    docker:
+      - image: circleci/ruby:2.7.5-node-browsers-legacy
+    steps:
+      - checkout
+      - configure_bundler
+      - run: bundle exec rspec
+
+workflows:
+  version: 2.1
+  build-and-rubocop:
+    jobs:
+#      - build
+      - rspec
+#      - rubocop
+
