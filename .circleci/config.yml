@@ -39,7 +39,7 @@ workflows:
   version: 2.1
   build-and-rubocop:
     jobs:
-#      - build
-      - rspec
+      - build
+#      - rspec
 #      - rubocop
 
