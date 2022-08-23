@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :providers, dependent: :destroy
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",
@@ -29,6 +30,23 @@ else
 end
     BCrypt::Password.create(string, cost: cost)
   end
+
+  # begin login gg facebook
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :omniauthable , omniauth_providers: [:facebook, :google_oauth2]
+
+  def self.from_omniauth(auth)
+    result = User.find_or_create_by(email: auth.info.email)
+    result.name = auth.info.name if result.name.nil?
+    result.email = auth.info.email
+    result.activated = true
+    result.password = SecureRandom.urlsafe_base64 if result.password.nil?
+    result.save!
+    result.providers.find_or_create_by(provider: auth.provider, name: auth.info.name)
+    result
+  end
+  # end login gg facebook
 
   # Returns a random token.
   def self.new_token

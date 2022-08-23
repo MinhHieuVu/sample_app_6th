@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_27_030205) do
+ActiveRecord::Schema.define(version: 2022_08_15_030936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2019_08_27_030205) do
     t.index ["user_id"], name: "index_microposts_on_user_id"
   end
 
+  create_table "providers", force: :cascade do |t|
+    t.bigint "user_id_id"
+    t.string "provider"
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id_id"], name: "index_providers_on_user_id_id"
+  end
+
   create_table "relationships", force: :cascade do |t|
     t.integer "follower_id"
     t.integer "followed_id"
@@ -75,6 +84,8 @@ ActiveRecord::Schema.define(version: 2019_08_27_030205) do
     t.datetime "activated_at"
     t.string "reset_digest"
     t.datetime "reset_sent_at"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
