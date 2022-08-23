@@ -47,6 +47,7 @@ group :production do
   gem "aws-sdk-s3", "1.87.0", require: false
   gem "pg",         "1.2.3"
 end
+gem "rubyzip", require: "zip"
 
 gem "rubocop"
 gem "rubocop-discourse"

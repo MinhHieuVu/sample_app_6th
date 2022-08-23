@@ -6,8 +6,8 @@
 
 # Ignore bundler config.
 /.bundle
-/.idea
-./Gemfile.lock
+idea/
+Gemfile.lock
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
