@@ -1,0 +1,24 @@
+<div class = " comment - <%= comment.id %> container">
+  <%= comment.user.name %> <span>:     </span>
+  <%= comment.content %>
+  <div class="sub-comment">
+    <%= render comment.comments %>
+  </div>
+<% if current_user == comment.user %>
+  <%= link_to " Delete", [@micropost, comment] ,method: :delete %>
+<% end %>
+  <a href="#" class="comment-form-display">Reply</a>
+  <div class="comment-form">
+    <%= render partial: 'comments/form' , locals: {micropost: comment.micropost , parent: comment}%>
+  </div>
+  <hr/>
+</div>
+
+<script>
+    document.querySelectorAll('.comment-form-display').forEach ((el) => {
+    el.addEventListener ('click',(ev) => {
+        ev.preventDefault() ;
+        el.nextElementSibling.style ='display: block;'
+    })
+  })
+</script>

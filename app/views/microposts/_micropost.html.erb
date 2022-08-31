@@ -12,4 +12,12 @@
                                        data: { confirm: "You sure?" } %>
     <% end %>
   </span>
+  <p>
+    <strong>Comments:</strong>
+    <%= render @micropost.comments %>
+    <%# @comments.each do |comment|%>
+      <%#= render 'comments/comment' , micropost: @micropost , comment: comment%>
+    <%# end %>
+    <%#= render 'comments/form' ,micropost: @micropost, parent: nil? %>
+  </p>
 </li>
