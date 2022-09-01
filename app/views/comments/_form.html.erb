@@ -1,9 +1,26 @@
-<%#= form_with(model: [micropost , micropost.comments.build ]) do |f| %>
-<!--  <div class = " form-control ">-->
-    <%# if @parent.present? %>
-      <%#= f.text_area :parent %>
-  <%#end%>
-    <%#= f.text_area :content %>
-    <%#= f.submit " Send" , class: " btn btn-primary mt-1 " %>
-<!--  </div>-->
-<%# end %>
+<% model = [local_assigns[:micropost],@comment].compact %>
+<%= form_with model: model , id: dom_id_for_records(*model),data: { controller: "turbo", action: "turbo:submit-end->reset-form#reset" } do |f| %>
+  <% if @comment.errors.any? %>
+    <div class="alert alert-danger">
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this micropost from being saved:</h2>
+        <ul>
+          <% @comment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <% if @parent.present? %>
+    <input type="hidden" name="comment[post_parent_id]" value="<%= @parent.id %>">
+  <%end%>
+  <%= link_to gravatar_for(current_user, size: 25), current_user %>
+  <span class="user"><%= link_to current_user.name, current_user %></span>
+  <%= f.text_field :body, placeholder: "Add a comment...", class: "text-field" %>
+  <span class="image">
+    <%= f.file_field :image, accept: "image/jpeg,image/gif,image/png", style: "width: 50%" %>
+  </span>
+  <%= f.submit "Comment", class: "btn btn-primary", style: "width: 14.5%" %>
+  <hr>
+<% end %>

@@ -1,5 +1,7 @@
 class User < ApplicationRecord
+  acts_as_voter
   has_many :comments, dependent: :destroy
+  has_many :emotes, dependent: :destroy
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",
                                   foreign_key: "follower_id",

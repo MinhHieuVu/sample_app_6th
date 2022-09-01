@@ -52,6 +52,13 @@ gem "rubocop"
 gem "rubocop-discourse"
 gem "rubocop-performance"
 gem "rubocop-rails"
+gem "closure_tree"
+gem "hotwire-rails"
+gem "cancancan", "~> 3.0"
+gem "acts_as_votable"
+gem "turbo-rails"
+gem "redis", "~> 4.0"
+gem "importmap-rails", "~> 1.1"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # Uncomment the following line if you're running Rails

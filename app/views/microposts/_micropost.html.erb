@@ -6,18 +6,22 @@
     <%= image_tag micropost.display_image if micropost.image.attached? %>
   </span>
   <span class="timestamp">
+    <% if @current_user %>
+      <% if !current_user.liked? micropost%>
+        <%= link_to "Like", likes_micropost_path(micropost), method: :put%>
+      <% else %>
+        <%= link_to "Unlike", likes_micropost_path(micropost), method: :put%>
+      <% end %>
+    <% end %>
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
     <% if current_user?(micropost.user) %>
-      <%= link_to "delete", micropost, method: :delete,
-                                       data: { confirm: "You sure?" } %>
+      <%= link_to "delete", micropost, method: :delete, data: { confirm: "You sure?" } %>
     <% end %>
   </span>
-  <p>
-    <strong>Comments:</strong>
-    <%= render @micropost.comments %>
-    <%# @comments.each do |comment|%>
-      <%#= render 'comments/comment' , micropost: @micropost , comment: comment%>
-    <%# end %>
-    <%#= render 'comments/form' ,micropost: @micropost, parent: nil? %>
-  </p>
 </li>
+<%= turbo_stream_from micropost, :comments %>
+<%= tag.div id: "#{dom_id(micropost)}_comments" do %>
+  <%= render micropost.comments.where(post_parent_id: nil)%>
+<% end %>
+</br>
+<%= turbo_frame_tag "new_comment", src: new_micropost_comment_path(micropost), target: "_top" %>

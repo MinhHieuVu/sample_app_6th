@@ -1,24 +1,38 @@
-<div class = " comment - <%= comment.id %> container">
-  <%= comment.user.name %> <span>:     </span>
-  <%= comment.content %>
-  <div class="sub-comment">
-    <%= render comment.comments %>
+<%= turbo_stream_from comment %>
+<%= turbo_frame_tag comment do %>
+  <div id="comment-<%= comment.id %>" class="comment">
+    <%= link_to gravatar_for(comment.user, size: 25), comment.user %>
+    <span class="user"><%= link_to comment.user.name, comment.user %></span>
+    <br/>
+    <span class="content">
+      <%= comment.body %>
+      <%= image_tag comment.image if comment.image.attached? %>
+    </span>
+    <span class="action">
+      <% Emoji.all.each do |emoji| %>
+        <% size = comment.emotes_size(emoji[:key]) %>
+        <%= link_to comment_emote_path(comment, emote: emoji[:key]), class: "emoji #{size.zero? ? 'emoji-gray' : ''}" do %>
+          <%= image_tag File.join('emojis', emoji[:key]), size: '25x25', title: emoji[:text] %>
+          <%= content_tag :span, size, class: 'count' %>
+        <% end %>
+      <% end %>
+      <% if @current_user == comment.user %>
+        <%= link_to "Edit", edit_comment_path(comment) %>
+      <% end %>
+      <% if @current_user == comment.user || @current_user == comment.micropost.user %>
+        <%= link_to "Delete", comment, method: :delete, data: { confirm: "Are you sure?" } %>
+      <% end %>
+    </span>
   </div>
-<% if current_user == comment.user %>
-  <%= link_to " Delete", [@micropost, comment] ,method: :delete %>
+  <%= turbo_frame_tag "new_comment" do %>
+    <span class="timestamp">
+      <%= link_to "Reply", new_micropost_comment_path(comment.micropost,post_parent_id: comment.id)%>
+      <%= time_ago_in_words(comment.created_at) %> ago.
+    </span>
+  <% end %>
+  <div class="sub_comment">
+    <%= tag.div id: "#{dom_id(comment.micropost, comment.id)}_comments" do %>
+      <%= render comment.comments if comment.comments.any? %>
+    <% end %>
+  </div>
 <% end %>
-  <a href="#" class="comment-form-display">Reply</a>
-  <div class="comment-form">
-    <%= render partial: 'comments/form' , locals: {micropost: comment.micropost , parent: comment}%>
-  </div>
-  <hr/>
-</div>
-
-<script>
-    document.querySelectorAll('.comment-form-display').forEach ((el) => {
-    el.addEventListener ('click',(ev) => {
-        ev.preventDefault() ;
-        el.nextElementSibling.style ='display: block;'
-    })
-  })
-</script>

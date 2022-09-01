@@ -1,16 +1,17 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  load_and_authorize_resource :micropost
+  load_and_authorize_resource :comment
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
     @micropost.image.attach(params[:micropost][:image])
-    if @micropost.save
-      flash[:success] = "Micropost created!"
-      redirect_to root_url
-    else
-      @feed_items = current_user.feed.paginate(page: params[:page])
-      render "static_pages/home"
+    respond_to do |format|
+      if @micropost.save
+        format.html { redirect_to root_url, notice: "Micropost created!" }
+      else
+        @feed_items = current_user.feed.paginate(page: params[:page])
+        format.html { render "static_pages/home", status: :unprocessable_entity }
+      end
     end
   end
 
@@ -25,6 +26,17 @@ class MicropostsController < ApplicationController
   end
 
   private
+
+  def vote
+    if current_user.liked? @micropost
+      @micropost.unliked_by current_user
+    else
+      @micropost.liked_by current_user
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
 
   def micropost_params
     params.require(:micropost).permit(:content, :image)

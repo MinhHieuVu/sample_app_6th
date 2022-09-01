@@ -8,15 +8,18 @@ Rails.application.routes.draw do
   post   "/login",   to: "sessions#create"
   delete "/logout",  to: "sessions#destroy"
   resources :users do
-    member do
-      get :following, :followers
-    end
+    member { get :following, :followers, :chat }
   end
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]
   resources :microposts do
     resources :comments
+    member { put "likes" => "comments#vote" }
   end
-  resources :relationships,       only: [:create, :destroy]
+  resources :comments do
+    resource :emote, only: :show
+  end
+
+  resources :relationships, only: [:create, :destroy]
   get "/microposts", to: "static_pages#home"
 end

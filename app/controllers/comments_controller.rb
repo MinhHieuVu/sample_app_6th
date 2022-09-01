@@ -1,40 +1,65 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :set_micropost
+  include ActionView::RecordIdentifier
+  include CommentsHelper
   before_action :set_current_user
+  before_action :authenticate_user!
+  load_and_authorize_resource :micropost
+  load_and_authorize_resource :comment
 
   def new
     @comment = Comment.new
-    @parent = Comment.find_by(id: params[:parent_id])
+    @parent = Comment.find_by(id: params[:post_parent_id])
+  end
+
+  def edit
   end
 
   def create
-    @micropost = Micropost.find(params[:micropost_id])
     @comment = @micropost.comments.new(comment_params)
     @comment.user = current_user
-
-    if @comment.save
-      flash[:notice] = "comment has been created"
-    else
-      flash[:alert] = "comment has not been created"
+    respond_to do |format|
+      if @comment.save
+        format.turbo_stream { }
+        format.html { redirect_to root_url }
+        format.json { render :show, status: :created, location: @comment }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
     end
-    redirect_to micropost_path(@micropost)
+  end
+
+  def update
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.html { redirect_to @comment, notice: "Comment was successfully updated." }
+        format.json { render :show, status: :ok, location: @comment }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def vote
+    if current_user.liked? @comment
+      @comment.unliked_by current_user
+    else
+      @comment.liked_by current_user
+    end
+
+    respond_to do |format|
+      format.html { redirect_to root_url }
+    end
   end
 
   def destroy
-    @comment = @micropost.comments.find(params[:id])
     @comment.destroy
-    redirect_to micropost_path(@micropost)
-  end
-
-  def set_micropost
-    @micropost = Micropost.find(params[:micropost_id])
   end
 
   private
 
   def comment_params
-    params.require(:comment).permit(:content, :parent_id, :user_id, :micropost_id)
+    params.require(:comment).permit(:body, :post_parent_id, :micropost, :user)
   end
 
   def set_current_user
