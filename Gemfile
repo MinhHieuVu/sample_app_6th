@@ -57,3 +57,5 @@ gem "rubocop-rails"
 # Uncomment the following line if you're running Rails
 # on a native Windows system:
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "hotwire-rails", "~> 0.1.3"

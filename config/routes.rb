@@ -13,8 +13,11 @@ Rails.application.routes.draw do
     end
   end
   resources :account_activations, only: [:edit]
-  resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :microposts,          only: [:create, :destroy]
-  resources :relationships,       only: [:create, :destroy]
+  resources :password_resets, only: [:new, :create, :edit, :update]
+  resources :microposts do
+    resources :comments
+  end
+  resources :comments
+  resources :relationships, only: [:create, :destroy]
   get "/microposts", to: "static_pages#home"
 end
