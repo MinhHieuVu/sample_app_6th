@@ -18,6 +18,6 @@
   <%= link_to gravatar_for(current_user, size: 25), current_user %>
   <span class="user"><%= link_to current_user.name, current_user %></span>
   <%= f.text_field :body, placeholder: "Add a comment...", class: "text-field" %>
-  <%= f.submit "Comment", class: "btn btn-primary", style: "width: 14.5%" %>
+  <%= f.submit "Comment", class: "btn btn-info", style: "width: 120px" %>
   <hr>
 <% end %>
