@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   include ActionView::RecordIdentifier
   include CommentsHelper
   before_action :logged_in_user, only: [:create, :destroy, :edit, :new]
-  before_action :correct_user, only: :destroy
+  before_action :correct_user, only: [:create, :destroy]
   before_action :set_current_user
 
   def new
@@ -22,7 +22,8 @@ class CommentsController < ApplicationController
         format.html { redirect_to root_url }
       else
         format.turbo_stream {
-          render turbo_stream: turbo_stream.replace(dom_id_for_records(@micropost, @comment), partial: "comments/form",
+          render turbo_stream: turbo_stream.replace(dom_id_for_records(@micropost, @comment),
+                                                    partial: "comments/form",
                                                     locals: { micropost: @micropost, comment: @comment })
         }
         format.html { render :new, status: :unprocessable_entity }
