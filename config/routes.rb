@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'emotes/emoji'
   root   "static_pages#home"
   get    "/help",    to: "static_pages#help"
   get    "/about",   to: "static_pages#about"
@@ -19,7 +18,7 @@ Rails.application.routes.draw do
     resources :comments
   end
   resources :comments do
-    resources :emotes, only: :show
+    resource :emote, only: :show
   end
   resources :relationships, only: [:create, :destroy]
   get "/microposts", to: "static_pages#home"

@@ -8,14 +8,6 @@
       <%= comment.body %>
     </span>
     <span class="action">
-      <% if @current_user == comment.user %>
-        <%= link_to "Edit", edit_comment_path(comment) %>
-      <% end %>
-      <% if @current_user == comment.user || @current_user == comment.micropost.user %>
-        <%= link_to "Delete", comment, method: :delete, data: { confirm: "Are you sure?" } %>
-      <% end %>
-    </span>
-    <span class="action">
       <% Emoji.all.each do |emoji| %>
         <% size = comment.emotes_size(emoji[:key]) %>
         <%= link_to comment_emote_path(comment, emote: emoji[:key]), class: "emoji #{size.zero? ? 'emoji-gray' : ''}" do %>
