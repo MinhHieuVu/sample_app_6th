@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   include ActionView::RecordIdentifier
+  has_many :emotes, dependent: :destroy
   belongs_to :user
   belongs_to :micropost
   belongs_to :parent, class_name: "Comment", optional: true
@@ -20,5 +21,8 @@ class Comment < ApplicationRecord
 
   after_update_commit do
     broadcast_replace_to self
+  end
+  def emotes_size(key)
+    self.emotes.select { |e| e.emoji == key }.size
   end
 end
