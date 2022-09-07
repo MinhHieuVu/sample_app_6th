@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     respond_to do |format|
       if @comment.save
-        format.turbo_stream { render turbo_stream: turbo_stream.replace('comment_form', partial: root_path, locals: { comment: Comment.new })}
+        format.turbo_stream { }
         format.html { redirect_to root_url, locals: { comment: Comment.new }}
       else
         format.turbo_stream {

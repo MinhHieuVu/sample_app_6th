@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :microposts do
     resources :comments
   end
+  resources :comments
   resources :relationships, only: [:create, :destroy]
   get "/microposts", to: "static_pages#home"
 end

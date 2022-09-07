@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_02_063215) do
+ActiveRecord::Schema.define(version: 2022_09_07_025229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,12 +37,6 @@ ActiveRecord::Schema.define(version: 2022_09_02_063215) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.bigint "micropost_id", null: false
@@ -52,6 +46,16 @@ ActiveRecord::Schema.define(version: 2022_09_02_063215) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["micropost_id"], name: "index_comments_on_micropost_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "emotes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "comment_id", null: false
+    t.string "emoji"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["comment_id"], name: "index_emotes_on_comment_id"
+    t.index ["user_id"], name: "index_emotes_on_user_id"
   end
 
   create_table "microposts", force: :cascade do |t|
@@ -101,8 +105,9 @@ ActiveRecord::Schema.define(version: 2022_09_02_063215) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "microposts"
   add_foreign_key "comments", "users"
+  add_foreign_key "emotes", "comments"
+  add_foreign_key "emotes", "users"
   add_foreign_key "microposts", "users"
 end
