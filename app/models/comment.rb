@@ -5,7 +5,6 @@ class Comment < ApplicationRecord
   belongs_to :micropost
   belongs_to :parent, class_name: "Comment", optional: true
   has_many :comments, foreign_key: "post_parent_id", dependent: :destroy
-  validates :user_id, presence: true
   validates :body, presence: true, allow_blank: false
   after_create_commit do
     if parent.present?
@@ -22,7 +21,7 @@ class Comment < ApplicationRecord
   after_update_commit do
     broadcast_replace_to self
   end
-  def emotes_size(key)
-    self.emotes.select { |e| e.emoji == key }.size
+  def emotes_size key
+    self.emotes.count { |e| e.emoji == key }
   end
 end

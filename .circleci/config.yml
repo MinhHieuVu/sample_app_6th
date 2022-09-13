@@ -40,6 +40,6 @@ workflows:
   build-and-rubocop:
     jobs:
       - build
-#      - rspec
+      - rspec
 #      - rubocop
 
