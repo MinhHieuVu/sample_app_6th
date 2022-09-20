@@ -21,6 +21,7 @@ class Comment < ApplicationRecord
   after_update_commit do
     broadcast_replace_to self
   end
+
   def emotes_size key
     self.emotes.count { |e| e.emoji == key }
   end

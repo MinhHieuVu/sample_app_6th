@@ -10,5 +10,3 @@ class Emoji
   end
 
 end
-
-
