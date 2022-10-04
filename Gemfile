@@ -47,6 +47,7 @@ group :production do
   gem "aws-sdk-s3", "1.87.0", require: false
   gem "pg",         "1.2.3"
 end
+gem "rubyzip", require: "zip"
 
 gem "rubocop"
 gem "rubocop-discourse"
@@ -57,6 +58,12 @@ gem "rubocop-rails"
 # Uncomment the following line if you're running Rails
 # on a native Windows system:
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+# # login facebook google
+gem "omniauth", ">= 1.6.1"
+gem "omniauth-facebook"
+gem "omniauth-google-oauth2", ">= 0.8.2"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
+gem 'devise'
 
 gem "hotwire-rails", "~> 0.1.3"
 gem 'turbo-rails'
