@@ -64,3 +64,11 @@ gem "omniauth-facebook"
 gem "omniauth-google-oauth2", ">= 0.8.2"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem 'devise'
+
+gem "hotwire-rails", "~> 0.1.3"
+gem 'turbo-rails'
+# Use Redis for Action Cable
+gem 'redis', '~> 4.0'
+gem 'closure_tree'
+
+gem "importmap-rails", "~> 1.1"

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :emotes, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :providers, dependent: :destroy
   has_many :microposts, dependent: :destroy
   has_many :active_relationships, class_name:  "Relationship",

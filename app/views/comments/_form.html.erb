@@ -1,0 +1,23 @@
+<% model = [local_assigns[:micropost],@comment].compact %>
+<%= form_with model: model , id: dom_id_for_records(*model),data: { controller: "turbo", action: "turbo:submit-end->reset-form#reset" } do |f| %>
+  <% if @comment.errors.any? %>
+    <div class="alert alert-danger">
+      <div id="error_explanation">
+        <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this micropost from being saved:</h2>
+        <ul>
+          <% @comment.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+  <% if @parent.present? %>
+    <input type="hidden" name="comment[post_parent_id]" value="<%= @parent.id %>">
+  <%end%>
+  <%= link_to gravatar_for(current_user, size: 25), current_user %>
+  <span class="user"><%= link_to current_user.name, current_user %></span>
+  <%= f.text_field :body, placeholder: "Add a comment...", class: "text-field" %>
+  <%= f.submit "Comment", class: "btn btn-info", style: "width: 120px" %>
+  <hr>
+<% end %>
