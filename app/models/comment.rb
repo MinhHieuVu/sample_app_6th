@@ -23,6 +23,7 @@ class Comment < ApplicationRecord
   end
 
   def emotes_size key
+    puts "da va ham emotes_size"
     self.emotes.count { |e| e.emoji == key }
   end
 end

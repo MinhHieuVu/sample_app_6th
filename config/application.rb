@@ -13,5 +13,6 @@ module SampleApp
 
     # Include the authenticity token in remote forms.
     config.action_view.embed_authenticity_token_in_remote_forms = true
+    config.factory_bot.definition_file_paths = ["custom/factories"]
   end
 end

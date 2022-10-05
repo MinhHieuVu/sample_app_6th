@@ -23,6 +23,7 @@ group :development, :test do
   gem "byebug",  "11.1.3", platforms: [:mri, :mingw, :x64_mingw]
   gem "sqlite3", "1.4.2"
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
 end
 
 group :development do
