@@ -1,9 +1,10 @@
 class CommentsController < ApplicationController
   include ActionView::RecordIdentifier
   include CommentsHelper
-  before_action :logged_in_user, only: [:create, :destroy, :edit, :new]
-  before_action :correct_user, only: [:create, :destroy, :edit, :update]
   before_action :set_current_user
+  before_action :authenticate_user!
+  load_and_authorize_resource :micropost
+  load_and_authorize_resource :comment
 
   def new
     @comment = Comment.new
