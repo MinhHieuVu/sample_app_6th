@@ -2,7 +2,7 @@
 
 ```
 $ git clone
-$ cd sample_app_6th_ed
+$ cd sample_app_6th
 ```
 
 Also make sure you’re using a compatible version of Node.js:
