@@ -1,4 +1,9 @@
 class User < ApplicationRecord
+  rolify
+  after_create :assign_default_role
+  def assign_default_role
+    self.add_role(:user) if self.roles.blank?
+  end
   scope :all_except, -> (user) {where.not(id: user)} #search all users except current user
   after_create_commit {broadcast_append_to "users"}
   has_many :messages
