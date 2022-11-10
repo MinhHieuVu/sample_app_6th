@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   def show
     # @user = User.find(params[:id])
     @microposts = @user.microposts.paginate(page: params[:page])
-    @users = User.all_except(current_user)
   end
 
   def new
@@ -89,8 +88,6 @@ class UsersController < ApplicationController
     users = [user1, user2].sort
     "private_#{users[0].id}_#{users[1].id}"
   end
-
-  private
 
   def user_params
     params.require(:user).permit(:name, :email, :password,
