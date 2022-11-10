@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     can :create, User
 
+
     return unless user.present?
     can [:vote, :read], Micropost
     can [:create, :destroy], Micropost, user: user
@@ -18,6 +19,10 @@ class Ability
     can :update, Comment, user: user
     can :destroy, Comment, user: user
     can :destroy, Comment, micropost: { user: user }
+
+    # message
+    can %i[create read], Message
+    can :read, Room
 
     return unless user.has_role? :admin
     can :manage, User

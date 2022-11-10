@@ -1,12 +1,15 @@
 class MessagesController < ApplicationController
+  load_and_authorize_resource :room
+  load_and_authorize_resource :message
 
   def create
-    @message = current_user.messages.create(body: msg_params[:body], room_id: params[:room_id])
+    @message = current_user.messages.new(message_params)
+    @message.room = @room
+    @message.save
   end
 
-  private
-
-  def msg_params
-    params.require(:message).permit(:body)
+  def message_params
+    params.require(:message).permit(:content, :picture)
   end
+
 end
