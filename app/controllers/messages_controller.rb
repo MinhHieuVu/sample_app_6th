@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:content, :picture)
+    params.require(:message).permit(:content)
   end
 
 end
