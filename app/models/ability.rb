@@ -4,6 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize user
+    can :manage, User
     can :create, User
 
     return if user.blank?
@@ -25,7 +26,5 @@ class Ability
     can :read, Room
 
     return unless user.has_role? :admin
-
-    can :manage, User
   end
 end
