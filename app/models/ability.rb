@@ -3,10 +3,12 @@
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
+  def initialize user
+    can :manage, User
     can :create, User
 
-    return unless user.present?
+    return if user.blank?
+
     can [:vote, :read], Micropost
     can [:create, :destroy], Micropost, user: user
     can :home, Micropost, ["user_id IN (SELECT followed_id FROM relationships
@@ -19,7 +21,10 @@ class Ability
     can :destroy, Comment, user: user
     can :destroy, Comment, micropost: { user: user }
 
+    # message
+    can %i(create read), Message
+    can :read, Room
+
     return unless user.has_role? :admin
-    can :manage, User
   end
 end

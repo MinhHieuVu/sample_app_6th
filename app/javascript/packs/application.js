@@ -10,6 +10,7 @@ import "channels"
 import "jquery"
 import "bootstrap"
 import "@hotwired/turbo-rails"
+import "controllers";
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

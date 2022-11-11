@@ -10,8 +10,20 @@
   <%= stylesheet_link_tag 'application', media: 'all',
                           'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <style>
+    <%= ".msg-#{current_user.id if current_user}" %>
+    {
+        background-color: #007bff !important;
+        padding: 10px;
+    }
+    <%= ".cont-#{current_user.id if current_user}" %>
+    {
+        /*display: flex;*/
+        justify-content: flex-end;
+    }
+  </style>
   <%= render 'layouts/shim' %>
-  <%#= javascript_importmap_tags %>
+  <%= javascript_importmap_tags %>
 </head>
 <body>
 <p class="notice"><%= notice %></p>

@@ -71,7 +71,22 @@ class UsersController < ApplicationController
     render "show_follow"
   end
 
+  def chat
+    @microposts = @user.microposts.paginate(page: params[:page])
+    @room_name = get_name(@user, current_user)
+    @single_room =
+      Room.find_by(name: @room_name) || Room.create_private_room([@user, @current_user], @room_name)
+    @messages = @single_room.messages
+
+    render 'users/show'
+  end
+
   private
+
+  def get_name(user1, user2)
+    users = [user1, user2].sort
+    "private_#{users[0].id}_#{users[1].id}"
+  end
 
   def user_params
     params.require(:user).permit(:name, :email, :password,

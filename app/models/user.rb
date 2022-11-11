@@ -4,6 +4,9 @@ class User < ApplicationRecord
   def assign_default_role
     self.add_role(:user) if self.roles.blank?
   end
+  scope :all_except, -> (user) {where.not(id: user)} #search all users except current user
+  after_create_commit {broadcast_append_to "users"}
+  has_many :messages, dependent: :destroy
   has_many :emotes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :providers, dependent: :destroy

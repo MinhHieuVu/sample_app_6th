@@ -75,3 +75,4 @@ gem 'closure_tree'
 gem "importmap-rails", "~> 1.1"
 gem "cancancan", "~> 3.0"
 gem "rolify"
+gem 'stimulus-rails'

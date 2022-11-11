@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   delete "/logout",  to: "sessions#destroy"
   resources :users do
     member do
-      get :following, :followers
+      get :following, :followers, :chat
     end
   end
   resources :account_activations, only: [:edit]
@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   end
   resources :comments do
     resource :emote, only: :show
+  end
+  resources :rooms do
+    resources :messages
   end
   resources :relationships, only: [:create, :destroy]
   get "/microposts", to: "static_pages#home"
