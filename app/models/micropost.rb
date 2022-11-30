@@ -1,6 +1,7 @@
 class Micropost < ApplicationRecord
   CSV_ATTRIBUTES = %w(content created_at).freeze
   has_many :comments, dependent: :destroy
+  has_many :likes
   belongs_to       :user
   has_one_attached :image
   default_scope -> { order(created_at: :desc) }

@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   resources :comments do
     resource :emote, only: :show
   end
+  resources :likes, only: [:create, :destroy]
+
   resources :rooms do
     resources :messages
   end
