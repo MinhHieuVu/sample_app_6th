@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :microposts do
     resources :comments
+    resource :emote, only: :show
   end
   resources :comments do
     resource :emote, only: :show

@@ -1,6 +1,7 @@
 class Micropost < ApplicationRecord
   CSV_ATTRIBUTES = %w(content created_at).freeze
   has_many :comments, dependent: :destroy
+  has_many :emotes, dependent: :destroy
   has_many :likes
   belongs_to       :user
   has_one_attached :image
@@ -15,5 +16,9 @@ class Micropost < ApplicationRecord
   # Returns a resized image for display.
   def display_image
     image.variant(resize_to_limit: [500, 500])
+  end
+
+  def emotes_size key
+    self.emotes.count { |e| e.emoji == key }
   end
 end
