@@ -6,9 +6,8 @@ class LikesController < ApplicationController
   def create
     @like = current_user.likes.new(like_params)
     # @micropost = Micropost.find(params[:id])
-    flash[:notice] = @like.errors.full_messages.to_sentence unless @like.save
     redirect_to root_url if @micropost.nil?
-
+    flash[:notice] = @like.errors.full_messages.to_sentence unless @like.save
 
   end
 
