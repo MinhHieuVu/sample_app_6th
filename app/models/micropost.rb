@@ -1,5 +1,6 @@
 class Micropost < ApplicationRecord
   CSV_ATTRIBUTES = %w(content created_at).freeze
+  acts_as_votable
   has_many :comments, dependent: :destroy
   has_many :emotes, dependent: :destroy
   has_many :likes

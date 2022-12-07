@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
   resources :microposts do
+    member do
+      patch "like", to: "microposts#like"
+    end
     resources :comments
     resource :emote, only: :show
   end
