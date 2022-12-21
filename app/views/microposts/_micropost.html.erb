@@ -13,6 +13,11 @@
     <% end %>
   </span>
 </li>
+<% if current_user %>
+  <%= content_tag "div", id: "like-link-#{micropost.id}" do %>
+    <%= render 'likes/like_link', micropost: micropost %>
+  <% end %>
+<% end %>
 <%= turbo_stream_from micropost, :comments %>
 <%= tag.div id: "#{dom_id(micropost)}_comments" do %>
   <%= render micropost.comments.where(post_parent_id: nil) %>

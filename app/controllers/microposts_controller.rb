@@ -24,6 +24,36 @@ class MicropostsController < ApplicationController
     end
   end
 
+  def like
+    @micropost = Micropost.find(params[:id])
+    if current_user.voted_up_on? @micropost
+      @micropost.downvote_by current_user
+    elsif current_user.voted_down_on? @micropost
+      @micropost.upvote_by current_user
+    else #not voted
+      @micropost.upvote_by current_user
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def upvote
+    @post = Post.find(params[:id])
+    @post.upvote_by current_user
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def downvote
+    @post = Post.find(params[:id])
+    @post.downvote_by current_user
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def micropost_params

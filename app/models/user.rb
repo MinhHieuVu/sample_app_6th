@@ -4,9 +4,10 @@ class User < ApplicationRecord
   def assign_default_role
     self.add_role(:user) if self.roles.blank?
   end
-  scope :all_except, -> (user) {where.not(id: user)} #search all users except current user
+  scope :all_except, ->(user) {where.not(id: user)} #search all users except current user
   after_create_commit {broadcast_append_to "users"}
   has_many :messages, dependent: :destroy
+  acts_as_voter
   has_many :emotes, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :providers, dependent: :destroy
@@ -19,6 +20,7 @@ class User < ApplicationRecord
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :likes
   attr_accessor :remember_token, :activation_token, :reset_token
 
   before_save   :downcase_email

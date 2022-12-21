@@ -76,3 +76,4 @@ gem "importmap-rails", "~> 1.1"
 gem "cancancan", "~> 3.0"
 gem "rolify"
 gem 'stimulus-rails'
+gem 'acts_as_votable'

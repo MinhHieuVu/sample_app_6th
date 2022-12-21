@@ -8,5 +8,4 @@ class Emoji
   def all_emoji
     list_of_emojis
   end
-
 end
