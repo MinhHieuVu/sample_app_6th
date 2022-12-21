@@ -12,14 +12,25 @@ Rails.application.routes.draw do
       get :following, :followers, :chat
     end
   end
+  get "votes/create"
+  get "votes/destroy"
   resources :account_activations, only: [:edit]
   resources :password_resets, only: [:new, :create, :edit, :update]
+  # resources :microposts do
+  #   member do
+  #     patch "like", to: "microposts#like"
+  #   end
+  #   resources :comments
+  #   resource :emote, only: :show
+  # end
   resources :microposts do
     member do
       patch "like", to: "microposts#like"
     end
     resources :comments
-    resource :emote, only: :show
+    resource :emote do
+      get :count_emoji
+    end
   end
   resources :comments do
     resource :emote, only: :show
@@ -34,5 +45,4 @@ Rails.application.routes.draw do
   # login devise
   # devise_for :users ,
   #            controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-
 end

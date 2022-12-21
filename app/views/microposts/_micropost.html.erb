@@ -14,8 +14,8 @@
   </span>
 </li>
 <% if current_user %>
-  <%= content_tag "div", id: "like-link-#{post.id}" do %>
-    <%= render 'likes/like_link', post: post %>
+  <%= content_tag "div", id: "like-link-#{micropost.id}" do %>
+    <%= render 'likes/like_link', micropost: micropost %>
   <% end %>
 <% end %>
 <%= turbo_stream_from micropost, :comments %>

@@ -1,21 +1,30 @@
-<%= link_to like_micropost_path(post), method: :patch, remote: true, id: "like-link-#{micropost.id}" do %>
-  <% if current_user.voted_up_on?(post) %>
-    UP voted
+<%= link_to like_micropost_path(micropost), method: :patch, remote: true, id: "like-link-#{micropost.id}" do %>
+  <% if current_user.voted_up_on?(micropost) %>
+<!--    UP voted-->
     <b>
-      <%= post.cached_votes_score %>
+      <%= micropost.cached_votes_score %>
     </b>
-    DOWN vote
-  <% elsif current_user.voted_down_on?(post) %>
+<!--    DOWN vote-->
+  <% elsif current_user.voted_down_on?(micropost) %>
     UP vote
     <b>
-      <%= post.cached_votes_score %>
+      <%= micropost.cached_votes_score %>
     </b>
     DOWN voted
   <% else %>
-    UP
+<!--    UP vote-->
     <b>
-      <%= post.cached_votes_score %>
+      <%= micropost.cached_votes_score %>
     </b>
-    DOWN
+<!--    DOWN-->
   <% end %>
 <% end %>
+<span class="action">
+  <% Emoji.all.each do |emoji| %>
+      <% size = micropost.emotes_size(emoji[:key]) %>
+    <%= link_to count_emoji_micropost_emote_path(micropost, emote: emoji[:key]), class: "emoji-link" do %>
+        <%= image_tag File.join('emojis', emoji[:key]), size: '25x25', title: emoji[:text] %>
+      <%= content_tag :span, size, class: 'count' %>
+      <% end %>
+    <% end %>
+</span>
